@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Resume from "./components/Resume";
 import Form from "./components/Form";
 import GlobalStyle from "./styles/global";
+import RoutesApp from "./routes";
 
 const App = () => {
   const data = localStorage.getItem("transactions");
@@ -41,9 +42,7 @@ const App = () => {
   };
   return (
     <>
-      <Header />
-      <Resume income={income} expense={expense} total={total} />
-      <Form handleAdd={handleAdd} transactionsList={transactionsList} setTransactionsList={setTransactionsList}/>
+      <RoutesApp />
       <GlobalStyle />
     </>
   );
