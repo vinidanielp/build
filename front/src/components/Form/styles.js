@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   max-width: 1120px;
-  margin: 20px auto;
+  margin: 20px auto; 
+  margin-top: -50px;
   width: 98%;
   background-color: #fff;
   box-shadow: 0px 0px 5px #ccc;
@@ -32,17 +33,6 @@ export const Input = styled.input`
   border: 1px solid #ccc;
 `;
 
-export const RadioGroup = styled.div`
-  display: flex;
-  align-items: center;
-
-  input {
-    margin-left: 20px;
-    margin-right: 5px;
-    accent-color: black;
-    margin-top: 0;
-  }
-`;
 
 export const Button = styled.button`
   padding: 5px 10px;

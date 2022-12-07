@@ -5,37 +5,36 @@ import Button from "../../components/ButtonLogin";
 import Header from "../../components/Header";
 import Resume from "../../components/Resume";
 import Form from "../../components/Form";
-import SideBar from "../../components/SideBar";
 
 const Home = () => {
   const { signout } = useAuth();
   const navigate = useNavigate();
 
   const data = localStorage.getItem("transactions");
+
   const [transactionsList, setTransactionsList] = useState(
     data ? JSON.parse(data) : []
   );
-  const [income, setIncome] = useState(0);
-  const [expense, setExpense] = useState(0);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const amountExpense = transactionsList
-      .filter((item) => item.expense)
+    const amountTotal = transactionsList
+      .filter((item) => item.amount)
       .map((transaction) => Number(transaction.amount));
 
-    const amountIncome = transactionsList
-      .filter((item) => !item.expense)
-      .map((transaction) => Number(transaction.amount));
+    const amount = amountTotal.reduce((acc, cur) => acc + cur, 0).toFixed(2);
 
-    const expense = amountExpense.reduce((acc, cur) => acc + cur, 0).toFixed(2);
-    const income = amountIncome.reduce((acc, cur) => acc + cur, 0).toFixed(2);
+    // const amount = amountTotal.toLocaleString("pt-br", {
+    //   style: "currency",
+    //   currency: "BRL",
+    // });
 
-    const total = Math.abs(income - expense).toFixed(2);
+    const total = amount.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    });
 
-    setIncome(`R$ ${income}`);
-    setExpense(`R$ ${expense}`);
-    setTotal(`R$ ${Number(income) < Number(expense) ? "-" : ""}R$ ${total}`);
+    setTotal(`${total}`);
   }, [transactionsList]);
 
   const handleAdd = (transaction) => {
@@ -48,15 +47,15 @@ const Home = () => {
 
   return (
     <>
-      <Header>
-        <SideBar />
-      </Header>
-      <Resume income={income} expense={expense} total={total} />
+      <Header />
       <Form
         handleAdd={handleAdd}
         transactionsList={transactionsList}
         setTransactionsList={setTransactionsList}
       />
+
+      <Resume total={total} />
+
       <Button Text="Sair" onClick={() => [signout(), navigate("/")]}>
         Sair
       </Button>

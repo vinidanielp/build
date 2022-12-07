@@ -5,16 +5,22 @@ import * as C from "./styles";
 const Form = ({ handleAdd, transactionsList, setTransactionsList }) => {
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState("");
-  const [isExpense, setExpense] = useState(false);
+  const [date, setDate] = useState("");
 
   const generateID = () => Math.round(Math.random() * 1000);
 
   const handleSave = () => {
-    if (!desc || !amount) {
-      alert("Informe a descrição e o valor!");
+    if (!desc) {
+      alert("Informe a descrição!");
       return;
-    } else if (amount < 1) {
-      alert("O valor tem que ser positivo!");
+    } else if (!amount) {
+      alert("Informe o valor!");
+      return;
+    } else if (amount <= 0) {
+      alert("Valor não pode ser zero ou negativo!");
+      return;
+    } else if (!date) {
+      alert("Informe a data!");
       return;
     }
 
@@ -22,13 +28,14 @@ const Form = ({ handleAdd, transactionsList, setTransactionsList }) => {
       id: generateID(),
       desc: desc,
       amount: amount,
-      expense: isExpense,
+      date: date,
     };
 
     handleAdd(transaction);
 
     setDesc("");
     setAmount("");
+    setDate("");
   };
 
   return (
@@ -46,23 +53,15 @@ const Form = ({ handleAdd, transactionsList, setTransactionsList }) => {
             onChange={(e) => setAmount(e.target.value)}
           />
         </C.InputContent>
-        <C.RadioGroup>
+        <C.InputContent>
+          <C.Label>Data</C.Label>
           <C.Input
-            type="radio"
-            id="rIncome"
-            defaultChecked
-            name="group1"
-            onChange={() => setExpense(!isExpense)}
+            value={date}
+            type="date"
+            onChange={(e) => setDate(e.target.value)}
           />
-          <C.Label htmlFor="rIncome">Entrada</C.Label>
-          <C.Input
-            type="radio"
-            id="rExpenses"
-            name="group1"
-            onChange={() => setExpense(!isExpense)}
-          />
-          <C.Label htmlFor="rExpenses">Saída</C.Label>
-        </C.RadioGroup>
+        </C.InputContent>
+
         <C.Button onClick={handleSave}>ADICIONAR</C.Button>
       </C.Container>
       <Grid itens={transactionsList} setItens={setTransactionsList} />

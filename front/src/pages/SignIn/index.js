@@ -31,8 +31,8 @@ const SignIn = () => {
 
   return (
     <C.Container>
-      <C.Label>SISTEMA DE LOGIN</C.Label>
       <C.Content>
+        <C.Label>SISTEMA DE LOGIN</C.Label>
         <Input
           type="email"
           placeholder="Digite seu E-mail"
@@ -48,10 +48,7 @@ const SignIn = () => {
         <C.LabelError>{error}</C.LabelError>
         <Button Text="Entrar" onClick={handleSignIn} />
         <C.LabelSignUp>
-          Não tem uma conta?
-          <C.Strong>
-            <Link to="/signup">&nbsp;Registre-se</Link>
-          </C.Strong>
+          <Link to="/signup">Esqueci minha senha</Link>
         </C.LabelSignUp>
       </C.Content>
     </C.Container>
